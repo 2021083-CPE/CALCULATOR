@@ -31,6 +31,10 @@ public class Calculator extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        jColorChooser1 = new javax.swing.JColorChooser();
+        jColorChooser2 = new javax.swing.JColorChooser();
         jtxtDisplay = new javax.swing.JTextField();
         jBtn1 = new javax.swing.JButton();
         jBtn2 = new javax.swing.JButton();
@@ -51,11 +55,34 @@ public class Calculator extends javax.swing.JFrame {
         txtDisplay = new javax.swing.JButton();
         jBtn18 = new javax.swing.JButton();
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        jTextField1.setText("jTextField1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 204, 204));
+        setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.GreyInline"));
 
         jtxtDisplay.setFont(new java.awt.Font("Lucida Bright", 1, 24)); // NOI18N
         jtxtDisplay.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jtxtDisplay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtDisplayActionPerformed(evt);
+            }
+        });
+        jtxtDisplay.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxtDisplayKeyTyped(evt);
+            }
+        });
 
         jBtn1.setFont(new java.awt.Font("Lucida Bright", 1, 24)); // NOI18N
         jBtn1.setText("1");
@@ -184,7 +211,13 @@ public class Calculator extends javax.swing.JFrame {
                 jBtn16ActionPerformed(evt);
             }
         });
+        jBtn16.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jBtn16KeyTyped(evt);
+            }
+        });
 
+        txtDisplay.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Blue"));
         txtDisplay.setFont(new java.awt.Font("Lucida Bright", 1, 24)); // NOI18N
         txtDisplay.setText("C");
         txtDisplay.addActionListener(new java.awt.event.ActionListener() {
@@ -193,6 +226,7 @@ public class Calculator extends javax.swing.JFrame {
             }
         });
 
+        jBtn18.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Blue"));
         jBtn18.setFont(new java.awt.Font("Lucida Bright", 1, 24)); // NOI18N
         jBtn18.setText("=");
         jBtn18.addActionListener(new java.awt.event.ActionListener() {
@@ -332,9 +366,15 @@ public class Calculator extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtn10ActionPerformed
 
     private void jBtn11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn11ActionPerformed
- 
-        String EnterNumber = jtxtDisplay.getText()+jBtn11.getText();
-        jtxtDisplay.setText(EnterNumber);
+        
+        String Enternumber = jtxtDisplay.getText() + jBtn11.getText();
+        if (jtxtDisplay.getText().contains(".")) {      //if the display number already contains a dot. it will not execute the dot button.
+            return;
+        }else{                                              //if the display number has not contains a dot. it will add a dot.
+            jtxtDisplay.setText(jtxtDisplay.getText()+".");
+        }
+        jtxtDisplay.setText(Enternumber);
+      
     }//GEN-LAST:event_jBtn11ActionPerformed
 
     private void jBtn12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn12ActionPerformed
@@ -379,37 +419,47 @@ public class Calculator extends javax.swing.JFrame {
 
     private void jBtn18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn18ActionPerformed
 
-        String answer;
+        double answer;
         secondnum = Double.parseDouble(jtxtDisplay.getText());
         if (operations == "+")
         {
-            result = firstnum + secondnum;
-            answer = String.format("%.2f", result);
-            jtxtDisplay.setText(answer);
+            answer = firstnum + secondnum;
+            String result = String.valueOf(answer);
+            jtxtDisplay.setText(result);
         }
         else if(operations == "-")
         {
-            result = firstnum - secondnum;
-            answer = String.format("%.2f", result);
-            jtxtDisplay.setText(answer);
+            answer = firstnum - secondnum;
+            String result = String.valueOf(answer);
+            jtxtDisplay.setText(result);
         }
         else if(operations == "*")
         {
-            result = firstnum * secondnum;
-            answer = String.format("%.2f", result);
-            jtxtDisplay.setText(answer);
+            answer = firstnum * secondnum;
+            String result = String.valueOf(answer);
+            jtxtDisplay.setText(result);
         }
         else if(operations == "/")
-        {
-            result = firstnum / secondnum;
-            answer = String.format("%.2f", result);
-            jtxtDisplay.setText(answer);
+        {   
+            if (secondnum==0){
+               
+                String result = String.format("undefined");
+                jtxtDisplay.setText(result);
+                
+                
+                
+            }else {
+                answer = firstnum / secondnum;
+                String result = String.valueOf(answer);
+                jtxtDisplay.setText(result);
+            }
+            
         }
         else if(operations == "%")
         {
-            result = firstnum % secondnum;
-            answer = String.format("%.2f", result);
-            jtxtDisplay.setText(answer);
+            answer = firstnum % secondnum;
+            String result = String.valueOf(answer);
+            jtxtDisplay.setText(result);
         }
     }//GEN-LAST:event_jBtn18ActionPerformed
 
@@ -437,6 +487,23 @@ public class Calculator extends javax.swing.JFrame {
         String Enternumber = jtxtDisplay.getText() + jBtn4.getText();
         jtxtDisplay.setText(Enternumber);
     }//GEN-LAST:event_jBtn4ActionPerformed
+
+    private void jtxtDisplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtDisplayActionPerformed
+           // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtDisplayActionPerformed
+
+    private void jtxtDisplayKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtDisplayKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();      //all of the letters in keyboard.
+           
+           if(!Character.isDigit(c)){ //if cha == false, if number == true. Will only execute numbers.
+               evt.consume();
+           } 
+    }//GEN-LAST:event_jtxtDisplayKeyTyped
+
+    private void jBtn16KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jBtn16KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtn16KeyTyped
 
     /**
      * @param args the command line arguments
@@ -491,6 +558,10 @@ public class Calculator extends javax.swing.JFrame {
     private javax.swing.JButton jBtn7;
     private javax.swing.JButton jBtn8;
     private javax.swing.JButton jBtn9;
+    private javax.swing.JColorChooser jColorChooser1;
+    private javax.swing.JColorChooser jColorChooser2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jtxtDisplay;
     private javax.swing.JButton txtDisplay;
     // End of variables declaration//GEN-END:variables
